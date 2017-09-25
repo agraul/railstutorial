@@ -1,3 +1,4 @@
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/reporters'
@@ -8,5 +9,8 @@ class ActiveSupport::TestCase
   fixtures :all
   include ApplicationHelper
 
-  # Add more helper methods to be used by all tests here...
+  # Returns true if a test user is logged in
+  def is_logged_in?
+    !session[:user_id].nil? # can't use SessionsHelper.logged_in? in a test
+  end
 end
