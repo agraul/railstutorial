@@ -4,7 +4,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
 
   test "form uses correct path" do
     get signup_path
-      assert_select 'form[action="/signup"]'
   end
 
   test "invalid signup information" do
