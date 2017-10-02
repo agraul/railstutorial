@@ -7,7 +7,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
   end
 
-  test "profile display" do
+  test 'profile display' do
     get user_path(@user)
     assert_template 'users/show'
     assert_select 'title', full_title(@user.name)
@@ -18,6 +18,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @user.microposts.paginate(page: 1).each do |micropost|
       assert_match micropost.content, response.body
     end
+    assert_select 'div.stats', count: 1
+    assert_select 'strong.stat', count: 2
   end
-  
 end
