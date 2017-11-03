@@ -1,0 +1,33 @@
+<form id="shout">
+  <h4>Shoutbox:</h4>
+  <span id="shoutBox"></span>
+  <input type="text" id="messageField" name="shoutout"
+  onkeypress="if (event.keyCode == 13) {sendText();return false;}"><br>
+  <button type="button">Say!</button>
+</form>
+  <script>
+const socket = new WebSocket('ws://localhost:8080');
+var button = document.querySelector('button');
+var outputBox = document.getElementById("shoutBox");
+
+button.addEventListener('click', sendText);
+
+function sendText() {
+  var time = "<%= Time.now.to_formatted_s(:short) %>";
+  var user = "<%= current_user.name %>"
+  var msg = {
+    client: user,
+    text: document.getElementById("messageField").value,
+    date: time
+  };
+  console.log(msg);
+  socket.send(JSON.stringify(msg));
+
+  document.getElementById("text").value = "";
+}
+
+socket.onmessage = function (event) {
+  console.log(event.data);
+  outputBox.innerHTML += '<br />' + event.data;
+}
+</script>
