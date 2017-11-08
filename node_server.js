@@ -4,6 +4,8 @@ const http = require('http');
 const server = http.createServer();
 const wss = new WebSocket.Server({ server: server, path: '/' });
 
+var messageArray = [];
+
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
@@ -12,19 +14,28 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
+
 wss.on('connection', function(ws) {
   var ipAddress = ws._socket.remoteAddress;
   connText = 'Client with ' + ipAddress + ' connected'
   console.log(connText);
+  messageArray.forEach(function(item, index, array) {
+    ws.send(item);
+  });
+
 
 
     ws.on('message', function(msg) {
       console.log(msg);
-      // parse msg and build fmsg which gets broadcasted to all
       var msgContent = JSON.parse(msg);
 
-      fmsg = msgContent.client + " at "+ msgContent.date
-      + " wrote: " + msgContent.text;
+      if (msgContent.text === "") {
+        return;
+      }
+
+      fmsg = msgContent.date + " - " + msgContent.client
+        + " : " + msgContent.text;
+      messageArray.push(fmsg);
       wss.broadcast(fmsg);
     });
 });

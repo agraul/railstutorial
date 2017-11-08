@@ -1,33 +1,43 @@
-<form id="shout">
-  <h4>Shoutbox:</h4>
-  <span id="shoutBox"></span>
-  <input type="text" id="messageField" name="shoutout"
-  onkeypress="if (event.keyCode == 13) {sendText();return false;}"><br>
-  <button type="button">Say!</button>
-</form>
-  <script>
-const socket = new WebSocket('ws://localhost:8080');
-var button = document.querySelector('button');
-var outputBox = document.getElementById("shoutBox");
+<h4>Shoutbox</h4>
+<span id="shoutBox"></span>
+<div>
+  <form>
+    <input class="shout" type="text" id="messageField">
+    <button class="butn" id="shoutBtn" type="button">Say!
+    </button>
+  </form>
+</div>
 
-button.addEventListener('click', sendText);
+<script>
+$(document).ready(function() {
+  const socket = new WebSocket('ws://' + location.hostname + ':8080');
+  console.log(location.hostname);
+  $('#shoutBtn').click(sendText);
+  $('#messageField').keydown(function(event) {
+    if (event.keyCode == 13) {
+      sendText();
+      return false;
+    }
+  });
 
-function sendText() {
-  var time = "<%= Time.now.to_formatted_s(:short) %>";
-  var user = "<%= current_user.name %>"
-  var msg = {
-    client: user,
-    text: document.getElementById("messageField").value,
-    date: time
-  };
-  console.log(msg);
-  socket.send(JSON.stringify(msg));
+  function sendText() {
+    var txt = $("#messageField").val();
+    var msg = {
+      client: "<%= current_user.name %>",
+      text:   txt,
+      date:   "<%= Time.now.to_formatted_s(:short) %>"
+    };
+    console.log(msg);
+    socket.send(JSON.stringify(msg));
+    $("#messageField").val("");
+  }
+  socket.onmessage = function (event) {
+    console.log(event.data);
+    $("#shoutBox").append(event.data, '<br>');
 
-  document.getElementById("text").value = "";
-}
+    $("#shoutBox").animate({
+      scrollTop: $("#shoutBox").prop('scrollHeight')}, 1000);
+  }
 
-socket.onmessage = function (event) {
-  console.log(event.data);
-  outputBox.innerHTML += '<br />' + event.data;
-}
+});
 </script>
