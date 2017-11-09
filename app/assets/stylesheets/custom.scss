@@ -296,13 +296,19 @@ span.picture {
 
   div {
     input {
+      margin-right: 0.2em;
       margin-top: 0.2em;
-      margin-right: 0.4em;
-      float: left;
-      width: 80%;
+      width: inherit;
+    }
+    span.butn {
+      float: right;
+    }
+    span {
+      display: inline-block;
     }
     button {
       margin-top: 0.1em;
+      float: right;
     }
   }
 }
