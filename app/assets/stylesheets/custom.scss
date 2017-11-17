@@ -284,3 +284,31 @@ span.picture {
     border: 0;
   }
 }
+
+/* Shoutbox */
+.sBox {
+  #shoutBox {
+    height: 6em;
+    padding: 3px;
+    border: 1px solid #bbb;
+    overflow: auto;
+  }
+
+  div {
+    input {
+      margin-right: 0.2em;
+      margin-top: 0.2em;
+      width: inherit;
+    }
+    span.butn {
+      float: right;
+    }
+    span {
+      display: inline-block;
+    }
+    button {
+      margin-top: 0.1em;
+      float: right;
+    }
+  }
+}

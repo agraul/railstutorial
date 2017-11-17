@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Button examples</title>
+</head>
+<body>
+  <form>
+    <!-- can be written as <button value="Start machine"> -->
+    <input type="button" value="Start machine">
+  </form>
+  <form>
+    <input type="button" value="Second Button">
+  </form>
+  <p>The machine is stopped.</p>
+</body>
+
+<script>
+// document.querySelector('query') only selects the *first* element that fits
+// therefore, "Second Button" does not do anything here.
+var btn = document.querySelector('input');
+var txt = document.querySelector('p');
+
+btn.addEventListener('click', updateBtn);
+
+function updateBtn() {
+  if (btn.value === 'Start machine') {
+    btn.value = 'Stop machine';
+    txt.textContent = 'The machine has started!';
+  } else {
+    btn.value = 'Start machine';
+    txt.textContent = 'The machine is stopped.';
+  }
+}
+</script>

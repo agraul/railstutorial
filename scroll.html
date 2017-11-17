@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script> 
+  </head>
+  <body>
+    <div id="chatwindow">
+     <div id="messagewindow">
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+      <p>Daniel wrote: Great party yesterday</p>
+      <p>Alex wrote: stil hungover</p>
+      <p>Chris: great party? nah.</p>
+      <p>Sam: what party</p>
+      <p>jenny: partytime!</p>
+    </div>
+    <div id="inputcontainer"><p>Your message</p></div>
+    </div>
+  </body>
+</html>
+  <script>
+$(document).ready(function(){
+  var scrollH = $('#messagewindow').prop('scrollHeight');
+    $('#messagewindow').animate({
+        scrollTop: scrollH}, 1000);
+});
+  </script>
+<style>
+#chatwindow{
+    position:relative;
+    height:400px;
+}
+#messagewindow, #inputcontainer{
+    position:absolute;
+    left:0;
+    right:0;
+    border:1px solid #000;
+}
+#messagewindow{   
+    overflow:auto;
+    top:0;
+    bottom:3em;
+}
+#inputcontainer{
+    display:block;
+    bottom:0;
+    height:1em;
+    padding:.5em;
+    margin-top:1em;
+}
+
+#inputcontainer > p{
+    margin:0;
+}
+</style>

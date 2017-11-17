@@ -1,0 +1,55 @@
+<h4>Shoutbox</h4>
+<span id="shoutBox"></span>
+<div>
+  <form>
+    <span class="shout">
+      <input class="shout" type="text" id="messageField">
+    </span>
+    <span class="butn">
+      <button class="butn" id="shoutBtn" type="button">Say!
+      </button>
+    </span>
+  </form>
+</div>
+
+<script>
+$(document).ready(function() {
+  const socket = new WebSocket('ws://' + location.hostname + ':8080');
+  $("#shoutBtn").click(sendText);
+  $(window).resize(maximizeInputSpan); 
+  maximizeInputSpan();
+  $("#messageField").keydown(function(event) {
+    if (event.keyCode == 13) {
+      sendText();
+      return false;
+    }
+  });
+  socket.onmessage = function (event) {
+    console.log(event.data);
+    $("#shoutBox").append(event.data, '<br>');
+
+    $("#shoutBox").scrollTop($("#shoutBox").prop("scrollHeight"));
+    /*$("#shoutBox").animate({
+      scrollTop: $("#shoutBox").prop('scrollHeight')}, 1000);*/
+  }
+
+  function sendText() {
+    var txt = $("#messageField").val();
+    var msg = {
+      client: "<%= current_user.name %>",
+      text:   txt,
+      date:   "<%= Time.now.to_formatted_s(:short) %>"
+    };
+    console.log(msg);
+    socket.send(JSON.stringify(msg));
+    $("#messageField").val("");
+  }
+  function maximizeInputSpan() {
+    var totalSpace = parseInt($(".sBox").css("width"));
+    var inputMarginR = parseInt($("input.shout").css("margin-right"));
+    var buttonSpace = parseInt($("#shoutBtn").css("width"));
+    var availSpace = totalSpace - (buttonSpace + inputMarginR);
+    $("span.shout").css("width", availSpace.toString() + "px");
+  }
+});
+</script>
